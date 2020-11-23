@@ -1,0 +1,11 @@
+{
+    "id": "{999071F8-0E12-4A53-ADC1-EAB413860282}",
+    "name": "Acs5000",
+    "type": 3,
+    "vendor": "",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "ACS5000"
+}
