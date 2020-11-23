@@ -110,7 +110,7 @@
 	
 		$result = IPSSNMP_ReadSNMP($this->ReadPropertyInteger("SnmpInstance"), Array($oid));
 		
-		$this->LogMessage("SNMP result " . $result, "DEBUG");
+		$this->LogMessage("SNMP result " . print_r($result, true), "DEBUG");
 
 		return $result[$oid];
 	}
