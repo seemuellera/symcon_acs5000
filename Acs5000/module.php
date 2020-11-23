@@ -22,6 +22,7 @@
 		$this->RegisterPropertyString("Sender","SymconAcs5000");
 		$this->RegisterPropertyInteger("RefreshInterval",5);
 		$this->RegisterPropertyInteger("SnmpInstance",0);
+		$this->RegisterPropertyBoolean("DebugOutput",false);
 
 		// Variables
 		$this->RegisterVariableString("Hostname", "Hostname");
@@ -55,6 +56,7 @@
 
 		// Add the Elements
 		$form['elements'][] = Array("type" => "NumberSpinner", "name" => "RefreshInterval", "caption" => "Refresh Interval");
+		$form['elements'][] = Array("type" => "CheckBox", "name" => "DebugOutput", "caption" => "Enable Debug Output");
 		$form['elements'][] = Array("type" => "SelectInstance", "name" => "SnmpInstance", "caption" => "SNMP instance");
 
 		// Add the buttons for the test center
@@ -107,6 +109,8 @@
 	protected function SnmpGet($oid) {
 	
 		$result = IPSSNMP_ReadSNMP($this->ReadPropertyInteger("SnmpInstance"), Array($oid));
+		
+		$this->LogMessage("SNMP result " . $result, "DEBUG");
 
 		return $result[$oid];
 	}
