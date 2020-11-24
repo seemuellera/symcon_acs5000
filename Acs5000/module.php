@@ -26,6 +26,9 @@
 
 		// Variables
 		$this->RegisterVariableString("Hostname", "Hostname");
+		$this->RegisterVariableString("DeviceType", "Device Type");
+		$this->RegisterVariableString("FirmwareVersion", "Firmware Version");
+		$this->RegisterVariableString("DeviceId", "Device ID");
 
 
 		// Timer
@@ -75,6 +78,9 @@
     public function RefreshInformation() {
 
 		$oid_mapping_table['Hostname'] = '.1.3.6.1.4.1.2925.8.2.1.0';
+		$oid_mapping_table['DeviceType'] = '.1.3.6.1.4.1.2925.8.1.1.0';
+		$oid_mapping_table['FirmwareVersion'] = '.1.3.6.1.4.1.2925.8.1.2.0';
+		$oid_mapping_table['DeviceId'] = '.1.3.6.1.4.1.2925.8.1.8.0';
 
 		$this->UpdateVariables($oid_mapping_table);
 	}
