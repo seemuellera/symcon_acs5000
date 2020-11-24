@@ -104,7 +104,7 @@
 		
 		foreach ($oids as $varIdent => $varOid) {
 		
-			if (in_array($conversionFactors, $varIdent)) {
+			if (array_key_exists($varIdent, $conversionFactors)) {
 				
 				$currentResult = $result[$varOid] * $conversionFactors[$varIdent];
 			}
