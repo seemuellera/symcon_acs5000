@@ -76,10 +76,7 @@
 
 		$oid_mapping_table['Hostname'] = '.1.3.6.1.4.1.2925.8.2.1.0';
 
-		foreach (array_keys($oid_mapping_table) as $currentIdent) {
-		
-			$this->UpdateVariable($currentIdent, $oid_mapping_table[$currentIdent]);
-		}
+		$this->UpdateVariables($oid_mapping_table);
 	}
 	
 	protected function LogMessage($message, $severity = 'INFO') {
@@ -93,12 +90,20 @@
 		
 		IPS_LogMessage($this->ReadPropertyString('Sender') . " - " . $this->InstanceID, $messageComplete);
 	}
+	
+	protected function UpdateVariables($oids) {
+	
+		$result = $this->SnmpGet($oids);
+		
+		foreach ($oids as $varIdent => $varOid) {
+		
+			$this->UpdateVariable($varIdent, $result[$varOid]);
+		}
+	}
 
-
-	protected function UpdateVariable($varIdent, $oid) {
+	protected function UpdateVariable($varIdent, $newValue) {
 	
 		$oldValue = GetValue($this->GetIDForIdent($varIdent));
-		$newValue = $this->SnmpGet($oid);
 
 		if ($newValue != $oldValue) {
 
@@ -106,13 +111,13 @@
 		}
 	}
 
-	protected function SnmpGet($oid) {
+	protected function SnmpGet($oids) {
 	
 		$result = IPSSNMP_ReadSNMP($this->ReadPropertyInteger("SnmpInstance"), Array($oid));
 		
 		$this->LogMessage("SNMP result " . print_r($result, true), "DEBUG");
 
-		return $result[$oid];
+		return $result;
 	}
 
 }
