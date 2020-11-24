@@ -79,9 +79,9 @@
         */
     public function RefreshInformation() {
 
-		$oid_mapping_table['UnitId'] = '.1.3.6.1.4.1.2925.8.5.4.1.2.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
-		$oid_mapping_table['UnitOutlets'] = '.1.3.6.1.4.1.2925.8.5.4.1.4.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
-		$oid_mapping_table['NominalVoltage'] = '.1.3.6.1.4.1.2925.8.5.4.1.5.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
+		$oid_mapping_table['OutletName'] = '.1.3.6.1.4.1.2925.8.5.4.1.2.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
+		$oid_mapping_table['Status'] = '.1.3.6.1.4.1.2925.8.5.4.1.4.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
+		$oid_mapping_table['Lock'] = '.1.3.6.1.4.1.2925.8.5.4.1.5.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
 
 		$this->UpdateVariables($oid_mapping_table);
 	}
