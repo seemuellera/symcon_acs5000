@@ -106,7 +106,7 @@
 		
 			if (array_key_exists($varIdent, $conversionFactors)) {
 				
-				$currentResult = $result[$varOid] * $conversionFactors[$varIdent];
+				$currentResult = floatval($result[$varOid]) * $conversionFactors[$varIdent];
 			}
 			else {
 				
