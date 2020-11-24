@@ -1,0 +1,11 @@
+{
+    "id": "{99BFAB6F-1501-4050-9018-6AB47A964339}",
+    "name": "Acs5000Pdu",
+    "type": 3,
+    "vendor": "",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "ACS5000"
+}
