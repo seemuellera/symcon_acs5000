@@ -83,7 +83,7 @@
 		$oid_mapping_table['UnitOutlets'] = '.1.3.6.1.4.1.2925.8.5.4.1.4.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
 		$oid_mapping_table['NominalVoltage'] = '.1.3.6.1.4.1.2925.8.5.4.1.5.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
 
-		$this->UpdateVariables($oid_mapping_table, $conversionFactors);
+		$this->UpdateVariables($oid_mapping_table);
 	}
 	
 	protected function LogMessage($message, $severity = 'INFO') {
@@ -98,22 +98,13 @@
 		IPS_LogMessage($this->ReadPropertyString('Sender') . " - " . $this->InstanceID, $messageComplete);
 	}
 	
-	protected function UpdateVariables($oids, $conversionFactors) {
+	protected function UpdateVariables($oids) {
 	
 		$result = $this->SnmpGet($oids);
 		
 		foreach ($oids as $varIdent => $varOid) {
 		
-			if (array_key_exists($varIdent, $conversionFactors)) {
-				
-				$currentResult = floatval($result[$varOid]) * $conversionFactors[$varIdent];
-			}
-			else {
-				
-				$currentResult = $result[$varOid];
-			}
-		
-			$this->UpdateVariable($varIdent, $currentResult);
+			$this->UpdateVariable($varIdent, $result[$varOid]);
 		}
 	}
 
