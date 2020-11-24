@@ -30,6 +30,9 @@
 		$this->RegisterVariableString("OutletName", "Outlet Name");
 		$this->RegisterVariableBoolean("Status","Status","~Switch");
 		$this->RegisterVariableBoolean("Lock","Lock","~Lock");
+		
+		// Default Actions
+		$this->EnableAction("Status");
 
 		// Timer
 		$this->RegisterTimer("RefreshInformation", 0, 'ACS5000PDUOUTLET_RefreshInformation($_IPS[\'TARGET\']);');
@@ -66,6 +69,9 @@
 
 		// Add the buttons for the test center
         $form['actions'][] = Array("type" => "Button", "label" => "Refresh Overall Status", "onClick" => 'ACS5000PDUOUTLET_RefreshInformation($id);');
+		$form['actions'][] = Array("type" => "Button", "label" => "Switch On", "onClick" => 'ACS5000PDUOUTLET_SwitchOn($id);');
+		$form['actions'][] = Array("type" => "Button", "label" => "Switch Off", "onClick" => 'ACS5000PDUOUTLET_SwitchOff($id);');
+		$form['actions'][] = Array("type" => "Button", "label" => "Cycle", "onClick" => 'ACS5000PDUOUTLET_Cycle($id);');
 
 		// Return the completed form
 		return json_encode($form);
@@ -84,6 +90,26 @@
 		$oid_mapping_table['Lock'] = '.1.3.6.1.4.1.2925.8.5.4.1.5.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
 
 		$this->UpdateVariables($oid_mapping_table);
+	}
+	
+	public function RequestAction($Ident, $Value) {
+	
+		switch ($Ident) {
+		
+			case "Status":
+				// If switch on
+				if ($Value) {
+					
+					$this->SwitchOn();
+				}
+				else {
+				
+					$this->SwitchOff();
+				}
+				break;
+			default:
+				throw new Exception("Invalid Ident");
+		}
 	}
 	
 	protected function LogMessage($message, $severity = 'INFO') {
@@ -126,5 +152,26 @@
 
 		return $result;
 	}
+	
+	public function SwitchOn() {
+		
+		$oid = '.1.3.6.1.4.1.2925.8.5.4.1.4.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
+		IPSSNMP_WriteSNMPbyOID($this->ReadPropertyInteger("SnmpInstance"), $oid, 1, 'i');
+		
+		$this->RefreshInformation();
+	}
 
+	public function SwitchOff() {
+		
+		$oid = '.1.3.6.1.4.1.2925.8.5.4.1.4.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
+		IPSSNMP_WriteSNMPbyOID($this->ReadPropertyInteger("SnmpInstance"), $oid, 0, 'i');
+		
+		$this->RefreshInformation();
+	}
+	
+	public function Cycle() {
+		
+		$oid = '.1.3.6.1.4.1.2925.8.5.4.1.4.' . $this->ReadPropertyInteger("PduIndex") . "." . $this->ReadPropertyInteger("OutletIndex");
+		IPSSNMP_WriteSNMPbyOID($this->ReadPropertyInteger("SnmpInstance"), $oid, 2, 'i');
+	}
 }
