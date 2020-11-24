@@ -33,6 +33,8 @@
 		$this->RegisterVariableFloat("Current", "Current","~Ampere.16");
 		$this->RegisterVariableFloat("MaximumCurrent", "Maximum Current","~Ampere.16");
 		$this->RegisterVariableString("SoftwareVersion", "Software Version");
+		$this->RegisterVariableFloat("Temperature", "Temperature","~Temperature");
+		$this->RegisterVariableFloat("MaximumTemperature", "Maximum Temperature","~Temperature");
 
 		// Timer
 		$this->RegisterTimer("RefreshInformation", 0, 'ACS5000PDU_RefreshInformation($_IPS[\'TARGET\']);');
@@ -92,6 +94,10 @@
 		$oid_mapping_table['MaximumCurrent'] = '.1.3.6.1.4.1.2925.8.5.3.1.6.' . $this->ReadPropertyInteger("PduIndex") . ".1";
 		$conversionFactors['MaximumCurrent'] = 0.1;
 		$oid_mapping_table['SoftwareVersion'] = '.1.3.6.1.4.1.2925.8.5.3.1.2.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$oid_mapping_table['Temperature'] = '.1.3.6.1.4.1.2925.8.5.9.1.7.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$conversionFactors['Temperature'] = 0.1;
+		$oid_mapping_table['MaximumTemperature'] = '.1.3.6.1.4.1.2925.8.5.9.1.8.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$conversionFactors['MaximumTemperature'] = 0.1;
 
 		$this->UpdateVariables($oid_mapping_table, $conversionFactors);
 	}
