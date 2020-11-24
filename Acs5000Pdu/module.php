@@ -27,6 +27,8 @@
 
 		// Variables
 		$this->RegisterVariableString("UnitId", "Unit ID");
+		$this->RegisterVariableInteger("UnitOutlets", "Unit Outlets");
+		$this->RegisterVariableFloat("NominalVoltage", "Nominal Voltage","~Volt.230");
 
 
 		// Timer
@@ -77,8 +79,11 @@
     public function RefreshInformation() {
 
 		$oid_mapping_table['UnitId'] = '.1.3.6.1.4.1.2925.8.5.3.1.11.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$oid_mapping_table['UnitOutlets'] = '.1.3.6.1.4.1.2925.8.5.3.1.3.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$oid_mapping_table['NominalVoltage'] = '.1.3.6.1.4.1.2925.8.5.3.1.3.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$conversionFactors['NominalVoltage'] = 0.1;
 
-		$this->UpdateVariables($oid_mapping_table);
+		$this->UpdateVariables($oid_mapping_table, $conversionFactors);
 	}
 	
 	protected function LogMessage($message, $severity = 'INFO') {
@@ -93,13 +98,22 @@
 		IPS_LogMessage($this->ReadPropertyString('Sender') . " - " . $this->InstanceID, $messageComplete);
 	}
 	
-	protected function UpdateVariables($oids) {
+	protected function UpdateVariables($oids, $conversionFactors) {
 	
 		$result = $this->SnmpGet($oids);
 		
 		foreach ($oids as $varIdent => $varOid) {
 		
-			$this->UpdateVariable($varIdent, $result[$varOid]);
+			if (in_array($conversionFactors, $varIdent)) {
+				
+				$currentResult = $result[$varOid] * $conversionFactors[$varIdent];
+			}
+			else {
+				
+				$currentResult = $result[$varOid];
+			}
+		
+			$this->UpdateVariable($varIdent, $currentResult);
 		}
 	}
 
