@@ -76,7 +76,7 @@
         */
     public function RefreshInformation() {
 
-		$oid_mapping_table['UnitId'] = '.1.3.6.1.4.1.2925.8.5.3.1.11' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$oid_mapping_table['UnitId'] = '.1.3.6.1.4.1.2925.8.5.3.1.11.' . $this->ReadPropertyInteger("PduIndex") . ".1";
 
 		$this->UpdateVariables($oid_mapping_table);
 	}
