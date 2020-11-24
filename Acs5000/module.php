@@ -74,7 +74,7 @@
         */
     public function RefreshInformation() {
 
-		$oid_mapping_table['Hostname'] = '.1.3.6.1.4.1.2925.8.2.1';
+		$oid_mapping_table['Hostname'] = '.1.3.6.1.4.1.2925.8.2.1.0';
 
 		foreach (array_keys($oid_mapping_table) as $currentIdent) {
 		
