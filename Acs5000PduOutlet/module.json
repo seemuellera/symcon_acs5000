@@ -1,0 +1,11 @@
+{
+    "id": "{DD935E83-D26F-4CCF-A365-0DA45F31BFB8}",
+    "name": "Acs5000PduOutlet",
+    "type": 3,
+    "vendor": "",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "ACS5000PDUOUTLET"
+}
