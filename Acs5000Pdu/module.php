@@ -29,6 +29,9 @@
 		$this->RegisterVariableString("UnitId", "Unit ID");
 		$this->RegisterVariableInteger("UnitOutlets", "Unit Outlets");
 		$this->RegisterVariableFloat("NominalVoltage", "Nominal Voltage","~Volt.230");
+		$this->RegisterVariableFloat("Power", "Power","~Watt.3680");
+		$this->RegisterVariableFloat("Current", "Current","~Ampere.16");
+		$this->RegisterVariableFloat("MaximumCurrent", "Maximum Current","~Ampere.16");
 
 
 		// Timer
@@ -82,6 +85,12 @@
 		$oid_mapping_table['UnitOutlets'] = '.1.3.6.1.4.1.2925.8.5.3.1.3.' . $this->ReadPropertyInteger("PduIndex") . ".1";
 		$oid_mapping_table['NominalVoltage'] = '.1.3.6.1.4.1.2925.8.5.3.1.14.' . $this->ReadPropertyInteger("PduIndex") . ".1";
 		$conversionFactors['NominalVoltage'] = 0.1;
+		$oid_mapping_table['Power'] = '.1.3.6.1.4.1.2925.8.5.3.1.15.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$conversionFactors['Power'] = 0.1;
+		$oid_mapping_table['Current'] = '.1.3.6.1.4.1.2925.8.5.3.1.5.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$conversionFactors['Current'] = 0.1;
+		$oid_mapping_table['MaximumCurrent'] = '.1.3.6.1.4.1.2925.8.5.3.1.6.' . $this->ReadPropertyInteger("PduIndex") . ".1";
+		$conversionFactors['MaximumCurrent'] = 0.1;
 
 		$this->UpdateVariables($oid_mapping_table, $conversionFactors);
 	}
